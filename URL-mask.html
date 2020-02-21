@@ -1,0 +1,45 @@
+<html>
+<title>URL Mask/Unmask tool</title>
+<body>
+<h2>Mask/Unmask URL List</h2>
+<p>Masks URL's making them un-clickable. Used for safely communicating malicious or inappropriate URLs</p>
+<textarea id="area" rows="20" cols="70"></textarea>
+<br /><br />
+<button id="mask" type="button" onclick="maskurls()">Mask</button>
+<button id="unmask" type="button" onclick="unmaskurls()">Unmask</button>
+<button id="createlinks" type="button" onclick="createlinks()">Create Links</button>
+<br /><br />
+<div id="links"></div>
+
+<script>
+function maskurls() {
+  var urllist = document.getElementById("area").value;
+  urllist = urllist.replace(/http/g, "hxxp");
+  urllist = urllist.replace(/\[+\.\]+/g, ".");
+  urllist = urllist.replace(/\./g, "[.]");
+  document.getElementById("area").value = urllist;
+}
+
+function unmaskurls() {
+  var urllist = document.getElementById("area").value;
+  urllist = urllist.replace(/hxxp/g, "http");
+  urllist = urllist.replace(/\[+\.\]+/g, ".");
+  document.getElementById("area").value = urllist;
+}
+
+function createlinks() {
+  var urllist = document.getElementById("area").value;
+  urllist = urllist.replace(/hxxp/g, "http");
+  urllist = urllist.replace(/\[+\.\]+/g, ".");
+  var urllistlinks = urllist.split(/[\r\n]+/);
+    var list = "";
+    urllistlinks.forEach(function(url) {
+      list = list + "<a href=" + url + ">" + url + "</a><br>\r\n";
+    });
+  document.getElementById("links").innerHTML = list;
+}
+
+</script>
+
+</body>
+</html>
