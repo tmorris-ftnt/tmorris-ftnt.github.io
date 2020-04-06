@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>ankee date fixer</title>
+</head>
+<body>
+<h2>Yankee date fixer</h2>
+<p>Changes MM/DD/YYYY into the correct DD/MM/YYYY format (and back again). </p>
+<textarea id="area" rows="20" cols="70"></textarea>
+<br/><br/>
+<button id="switchdates" type="button" onclick="switchdates()">Switch</button>
+<br/><br/>
+
+
+<script>
+
+
+    function switchdates() {
+        var newdatetext, fLen, i;
+        var datelist = document.getElementById("area").value;
+        datearray = datelist.split("\n");
+        fLen = datearray.length;
+        newdatetext = "";
+        for (i = 0; i < fLen; i++) {
+            currentDate = datearray[i]
+            var newDate = currentDate.split('/');
+            if (newDate.length == 3) {
+                currentDate = newDate[1] + "/" + newDate[0] + "/" + newDate[2];
+                newdatetext += currentDate + "\n";
+            }
+        }
+        document.getElementById("area").value = newdatetext;
+    }
+
+</script>
+
+</body>
+</html>
