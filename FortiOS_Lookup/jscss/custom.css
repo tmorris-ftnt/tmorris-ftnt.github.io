@@ -3,7 +3,7 @@ body {
   padding-left: 2rem;
 }
 .container {
-width: 800px;
+width: 1200px;
 }
 .searchbox {
   padding-top: 1rem;
@@ -16,4 +16,35 @@ td.M {
 td.S {
   background-color: #f1a899;
   text-align: center;
+}
+span.sev {
+    text-align: center;
+  margin: 0 3px 0 3px;
+  padding: 3px 3px 3px 3px;
+  width: 20px;
+  display: inline-block;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 8px
+
+}
+span.sev1 {
+  background-color: blue;
+
+}
+span.sev2 {
+  background-color: green;
+
+}
+span.sev3 {
+  background-color: yellow;
+
+}
+span.sev4 {
+  background-color: orange;
+
+}
+span.sev5 {
+  background-color: red;
+
 }
