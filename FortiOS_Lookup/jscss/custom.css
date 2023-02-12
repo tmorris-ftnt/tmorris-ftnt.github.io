@@ -9,42 +9,69 @@ width: 1200px;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.psirt {
+  font-size: small;
+}
+a {
+  text-decoration: underline;
+}
 td.M {
   background-color: #8fd19e;
-  text-align: center;
 }
 td.S {
   background-color: #f1a899;
-  text-align: center;
 }
 span.sev {
-    text-align: center;
-  margin: 0 3px 0 3px;
-  padding: 3px 3px 3px 3px;
-  width: 20px;
+  text-align: center;
+  margin: 0 0px 3px 2px;
+  width: 24px;
+  height: 24px;
   display: inline-block;
-  font-size: small;
+  color: white;
+  font-size: medium;
   font-weight: bold;
-  border-radius: 8px
-
+  border-radius: 3px 3px 3px 3px;
 }
 span.sev1 {
-  background-color: blue;
-
+  background-color: green;
 }
 span.sev2 {
-  background-color: green;
-
+  background-color: #e08a00;
 }
 span.sev3 {
-  background-color: yellow;
-
+  background-color: #b92200;
 }
-span.sev4 {
-  background-color: orange;
 
-}
-span.sev5 {
-  background-color: red;
 
-}
+ div#psirt-help {
+   display: none;
+   position: absolute;
+   width: 280px;
+   padding: 10px;
+   background: #eeeeee;
+   color: #000000;
+   border: 1px solid #1a1a1a;
+   font-size: 90%;
+ }
+
+  div#type-help {
+   display: none;
+   position: absolute;
+   width: 280px;
+   padding: 10px;
+   background: #eeeeee;
+   color: #000000;
+   border: 1px solid #1a1a1a;
+   font-size: 90%;
+ }
+
+div#branch-help {
+   display: none;
+   position: absolute;
+   width: 280px;
+   padding: 10px;
+   background: #eeeeee;
+   color: #000000;
+   border: 1px solid #1a1a1a;
+   font-size: 90%;
+ }
