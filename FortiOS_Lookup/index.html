@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="jscss/jquery-ui.min.css">
     <script src="jscss/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="jscss/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="jscss/bootstrap.min.js"></script>
     <link rel="stylesheet" href="jscss/custom.css">
-	<script src="platform_list.js"></script>
+    <script src="platform_list.js"></script>
 
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
+
 
             $('#updatedate').html(update_date);
             $('#platforms').autocomplete({
@@ -23,50 +25,135 @@
             });
 
             $("#fetch").click(function (event) {
-                $.getJSON('platforms.json', function (emp) {
+                $.getJSON('fosinfo.json', function (emp) {
                     plat = $('#platforms').val();
-                    rendertable = '<h5>Platform: ' + plat + '</h5><table class="table" width="800"><thead class="thead-light"><tr><th width="50%">Version</th><th width="10%">Type</th><th width="20%">Build No.</th><th width="20%">GA Date</th></tr></thead>';
-                    $.each(emp[plat], function (ver, detail) {
-                        rendertable = rendertable + '<tr><td>' + ver + '</td><td class="' + detail[0] + '">' + detail[0] + '</td><td>' + detail[1] + '</td><td>' + detail[2] + '</td><tr>';
+                    if (emp['platforms'][plat]['lifecycle']['eoo'] == "") {
+                        plcinfo = '<table class="table" width="800"><thead class="thead-light"><tr><th width="34%">End Of Order</th><th width="33%">Last Service Extension</th><th width="33%">End of Support</th></tr></thead><tr><td colspan="3">No End of Life information available.</td><tr></table>'
+                    } else {
+                        plcinfo = '<table class="table" width="800"><thead class="thead-light"><tr><th width="34%">End Of Order</th><th width="33%">Last Service Extension</th><th width="33%">End of Support</th></tr></thead><tr><td>' + emp['platforms'][plat]['lifecycle']['eoo'] + '</td><td>' + emp['platforms'][plat]['lifecycle']['lsed'] + '</td><td>' + emp['platforms'][plat]['lifecycle']['eos'] + '</td><tr></table>'
+                    }
+                    rendertable = '<h5>Platform: ' + plat + '</h5><h6>Product Life Cycle</h6>' + plcinfo + '<h6>Available Software</h6><table class="table" width="800"><thead class="thead-light"><tr><th width="25%">Version</th><th width="15%">Branch <i class="bi bi-question-circle branch-trigger"></i></th><th width="15%">Build No.</th><th width="15%">Release Type <i class="bi bi-question-circle type-trigger"></i></th><th width="30%">PSIRT <i class="bi bi-question-circle psirt-trigger"></i></th></tr></thead>';
+
+                    $.each(emp['platforms'][plat]['releases'], function (ver, detail) {
+                        vulninfo = '<span class="psirt">[<a href="fos_vuln.html#' + ver + '">view</a>]&nbsp;</span>';
+                        $.each(emp['vuln'][ver], function (sev, count) {
+                            vulninfo = vulninfo + '<span class="sev sev' + sev + '">' + count + '</span>';
+                        });
+
+                        if (detail['trunk'] == "M") {
+                            trunktext = "Main Branch";
+                        } else {
+                            trunktext = "Special Branch";
+                        }
+
+                       if (detail['type'] == "F") {
+                            typetext = "Feature";
+                        } else if (detail['type'] == "M") {
+                           typetext = "Mature";
+                       } else {
+                           typetext = "";
+                       }
+
+                        rendertable = rendertable + '<tr><td>FortiOS v' + ver + ' GA Release</td><td class="' + detail['trunk'] + '">' + trunktext + '</td><td>' + detail['buildno'] + '</td><td>' + typetext + '</td><td>' + vulninfo + '</td><tr>';
                     });
                     rendertable = rendertable + '</table>';
                     $('#display').html(rendertable);
+
+                    $('i.psirt-trigger').hover(function (e) {
+                        $('div#psirt-help').show();
+                    }, function () {
+                        $('div#psirt-help').hide();
+                    });
+                    $('i.psirt-trigger').mousemove(function (e) {
+                        $("div#psirt-help").css('top', e.pageY + 10).css('left', e.pageX + 20);
+                    });
+
+
+
+                    $('i.type-trigger').hover(function (e) {
+                        $('div#type-help').show();
+                    }, function () {
+                        $('div#type-help').hide();
+                    });
+                    $('i.type-trigger').mousemove(function (e) {
+                        $("div#type-help").css('top', e.pageY + 10).css('left', e.pageX + 20);
+                    });
+
+
+                    $('i.branch-trigger').hover(function (e) {
+                        $('div#branch-help').show();
+                    }, function () {
+                        $('div#branch-help').hide();
+                    });
+                    $('i.branch-trigger').mousemove(function (e) {
+                        $("div#branch-help").css('top', e.pageY + 10).css('left', e.pageX + 20);
+                    });
+
+
                 });
 
             });
+
         });
+
+
     </script>
 </head>
 
 <div class="container float-left">
-        <h2>FortiOS Lookup Tool</h2>
+    <h2>FortiOS Lookup Tool</h2>
 
-        <div class="searchbox">
-            <form class="form-inline">
+    <div class="searchbox">
+        <form class="form-inline">
 
-              <div class="form-group mx-sm-3 mb-2">
+            <div class="form-group mx-sm-3 mb-2">
                 <label for="platforms" class="sr-only">Platform</label>
                 <input type="text" class="form-control" id="platforms" placeholder="Platform">
-              </div>
-              <button type="button" class="btn btn-primary mb-2" id="fetch">Submit</button>
+            </div>
+            <button type="button" class="btn btn-primary mb-2" id="fetch">Submit</button>
 
-            </form>
-        </div>
-
-
-        <div id="display"></div>
-        <br/>
-        <div id="info">Type:
-            <ul>
-                <li>M = Main Trunk</li>
-                <li>S = Special Build</li>
-            </ul>
-            Data Updated: <span id="updatedate"></span>
-        </div>
+        </form>
     </div>
+
+
+    <div id="display"></div>
+    <br/>
+    <div id="info">
+        Data Updated: <span id="updatedate"></span><br /><br />
+    </div>
+</div>
 <br/>
 <br/>
 
+
+
+<!-- HIDDEN / POP-UP DIV -->
+<div id="psirt-help">
+    <p>
+        Shows the number of known vulnerabilties per severity:<br /><br />
+        <span class="sev sev1">#</span> Information / Low / Medium <br />
+        <span class="sev sev2">#</span> High<br />
+        <span class="sev sev3">#</span> Critical<br />
+
+    </p>
+
+</div>
+
+<!-- HIDDEN / POP-UP DIV -->
+<div id="type-help">
+    <p>
+Shows if the build it marked as a Feature or Mature build. Only applies since 6.4.10 / 7.0.6 / 7.2.0.
+    </p>
+
+</div>
+
+<!-- HIDDEN / POP-UP DIV -->
+<div id="branch-help">
+    <p>
+Shows the branch type for this model. Special branches are most commonly used while a model is new and support for the model has not yet been merged into the main code branch.
+    </p>
+
+</div>
 
 </body>
 </html> 
