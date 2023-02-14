@@ -21,6 +21,11 @@ td.M {
 td.S {
   background-color: #f1a899;
 }
+
+tr.split {
+    border-bottom: 3px solid #dee2e6;
+}
+
 span.sev {
   text-align: center;
   margin: 0 0px 3px 2px;
