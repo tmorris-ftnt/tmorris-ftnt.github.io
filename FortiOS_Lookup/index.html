@@ -5,14 +5,14 @@
     <title>
         FortiOS lookup tool
     </title>
-
+    <link rel="stylesheet" href="jscss/custom.css">
     <script src="jscss/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="jscss/jquery-ui.min.css">
     <script src="jscss/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="jscss/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="jscss/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="jscss/custom.css">
+
     <script src="platform_list.js"></script>
 
     <script type="text/javascript" language="javascript">
@@ -54,7 +54,13 @@
                            typetext = "";
                        }
 
-                        rendertable = rendertable + '<tr><td>FortiOS v' + ver + ' GA Release</td><td class="' + detail['trunk'] + '">' + trunktext + '</td><td>' + detail['buildno'] + '</td><td>' + typetext + '</td><td>' + vulninfo + '</td><tr>';
+                        if (ver.slice(-2) == ".0") {
+                            trclass = "split";
+                        } else {
+                            trclass = "normal";
+                        }
+
+                        rendertable = rendertable + '<tr class="' + trclass + '"><td>FortiOS v' + ver + ' GA Release</td><td class="' + detail['trunk'] + '">' + trunktext + '</td><td>' + detail['buildno'] + '</td><td>' + typetext + '</td><td>' + vulninfo + '</td><tr>';
                     });
                     rendertable = rendertable + '</table>';
                     $('#display').html(rendertable);
