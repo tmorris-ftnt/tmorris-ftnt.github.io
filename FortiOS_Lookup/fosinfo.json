@@ -37392,6 +37392,11 @@
                     "type": "",
                     "trunk": "S",
                     "buildno": "6174"
+                },
+                "6.4.12": {
+                    "type": "M",
+                    "trunk": "S",
+                    "buildno": "5431"
                 }
             },
             "lifecycle": {
@@ -37427,6 +37432,11 @@
                     "type": "",
                     "trunk": "S",
                     "buildno": "5206"
+                },
+                "6.4.12": {
+                    "type": "M",
+                    "trunk": "S",
+                    "buildno": "5431"
                 }
             },
             "lifecycle": {
@@ -37502,6 +37512,11 @@
                     "type": "",
                     "trunk": "S",
                     "buildno": "5306"
+                },
+                "6.4.12": {
+                    "type": "M",
+                    "trunk": "S",
+                    "buildno": "5431"
                 }
             },
             "lifecycle": {
@@ -37537,6 +37552,11 @@
                     "type": "",
                     "trunk": "S",
                     "buildno": "5306"
+                },
+                "6.4.12": {
+                    "type": "M",
+                    "trunk": "S",
+                    "buildno": "5431"
                 }
             },
             "lifecycle": {
