@@ -26,6 +26,7 @@
 
             $("#fetch").click(function (event) {
                 $.getJSON('fosinfo.json', function (emp) {
+					let lastver = "9";
                     plat = $('#platforms').val();
                     if (emp['platforms'][plat]['lifecycle']['eoo'] == "") {
                         plcinfo = '<table class="table" width="800"><thead class="thead-light"><tr><th width="25%">Approx Launch Date</th><th width="25%">End Of Order</th><th width="25%">Last Service Extension</th><th width="25%">End of Support</th></tr></thead><tr><td>' + emp['platforms'][plat]['lifecycle']['rel'] + '</td><td colspan="3">No End of Life information available.</td><tr></table>'
@@ -54,8 +55,9 @@
                            typetext = "";
                        }
 
-                        if (ver.slice(-2) == ".0") {
+                        if (ver.split(".")[1] != lastver) {
                             trclass = "split";
+							lastver = ver.split(".")[1];
                         } else {
                             trclass = "normal";
                         }
